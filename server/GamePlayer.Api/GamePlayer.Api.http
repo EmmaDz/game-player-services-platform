@@ -1,0 +1,136 @@
+@GamePlayer.Api_HostAddress = http://localhost:5204
+
+###
+### Invalid result
+
+POST http://localhost:5204/api/matches
+Content-Type: application/json
+
+{
+  "externalMatchId": "ARENA-TEST-BAD-RESULT",
+  "gameMode": "Ranked",
+  "playedAtUtc": "2026-09-23T20:00:00Z",
+  "participants": [
+    {
+      "playerProfileId": "d4256c55-291a-4585-b209-b195130bafb7",
+      "score": 1200,
+      "kills": 8,
+      "deaths": 3,
+      "result": "Winner"
+    },
+    {
+      "playerProfileId": "704a04e6-e2a2-4332-af76-71520c3d2491",
+      "score": 900,
+      "kills": 4,
+      "deaths": 5,
+      "result": "Loss"
+    }
+  ]
+}
+
+### Missing player test
+
+POST http://localhost:5204/api/matches
+Content-Type: application/json
+
+{
+  "externalMatchId": "ARENA-TEST-MISSING-PLAYER",
+  "gameMode": "Ranked",
+  "playedAtUtc": "2026-09-23T20:00:00Z",
+  "participants": [
+    {
+      "playerProfileId": "d4256c55-291a-4585-b209-b195130bafb7",
+      "score": 1200,
+      "kills": 8,
+      "deaths": 3,
+      "result": "Win"
+    },
+    {
+      "playerProfileId": "00000000-0000-0000-0000-000000000001",
+      "score": 900,
+      "kills": 4,
+      "deaths": 5,
+      "result": "Loss"
+    }
+  ]
+}
+
+### Create second match
+
+POST http://localhost:5204/api/matches
+Content-Type: application/json
+
+{
+  "externalMatchId": "ARENA-2026-000002",
+  "gameMode": "Casual",
+  "playedAtUtc": "2026-09-23T21:00:00Z",
+  "participants": [
+    {
+      "playerProfileId": "704a04e6-e2a2-4332-af76-71520c3d2491",
+      "score": 1350,
+      "kills": 10,
+      "deaths": 2,
+      "result": "Win"
+    },
+    {
+      "playerProfileId": "d4256c55-291a-4585-b209-b195130bafb7",
+      "score": 800,
+      "kills": 3,
+      "deaths": 8,
+      "result": "Loss"
+    }
+  ]
+}
+
+### Create third match
+
+POST http://localhost:5204/api/matches
+Content-Type: application/json
+
+{
+  "externalMatchId": "ARENA-2026-000003",
+  "gameMode": "Casual",
+  "playedAtUtc": "2026-09-24T21:00:00Z",
+  "participants": [
+    {
+      "playerProfileId": "704a04e6-e2a2-4332-af76-71520c3d2491",
+      "score": 1500,
+      "kills": 12,
+      "deaths": 4,
+      "result": "Win"
+    },
+    {
+      "playerProfileId": "d4256c55-291a-4585-b209-b195130bafb7",
+      "score": 1100,
+      "kills": 8,
+      "deaths": 5,
+      "result": "Loss"
+    }
+  ]
+}
+
+### Valid leaderboard
+
+GET http://localhost:5204/api/leaderboard
+
+### Invalid page
+
+GET http://localhost:5204/api/leaderboard?page=0
+
+### Negative page
+
+GET http://localhost:5204/api/leaderboard?page=-3
+
+### Invalid page size zero
+
+GET http://localhost:5204/api/leaderboard?pageSize=0
+
+### Page size too large
+
+GET http://localhost:5204/api/leaderboard?pageSize=101
+
+### Not enough players
+GET http://localhost:5204/api/leaderboard?page=100&pageSize=10
+
+### Page is not a number
+http://localhost:5204/api/leaderboard?page=hello
